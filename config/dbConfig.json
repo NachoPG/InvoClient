@@ -1,6 +1,6 @@
 {
     "server": "localhost",
     "user": "root",
-    "password": "",
-    "dbname": "todolist"
+    "password": "admin",
+    "dbname": "invoclient"
 }
