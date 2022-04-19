@@ -10,7 +10,7 @@ class DataBase implements IDataBase
     private $conn;
     public function __construct()
     {
-        $this->dbConfig= json_decode(file_get_contents(__DIR__ . "/../../config/dbConfig.json"), true);
+        $this->dbConfig = json_decode(file_get_contents(__DIR__ . "/../../config/dbConfig.json"), true);
         $this->connect();
     }
     private function connect()
@@ -19,7 +19,6 @@ class DataBase implements IDataBase
         $username = $this->dbConfig["user"];
         $password = $this->dbConfig["password"];
         $dbName = $this->dbConfig["dbname"];
-
         // Create connection
         $this->conn = new \mysqli($servername, $username, $password, $dbName);
     }
@@ -28,6 +27,15 @@ class DataBase implements IDataBase
     {
         return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
+    public function actionSQL($sql)
+    {
+        return $this->conn->query($sql);
+    }
+    public function escape($value)
+    {
+        return $this->conn->real_escape_string($value);
+    }
+
     public function __destruct()
     {
         if ($this->conn != null) $this->conn->close();

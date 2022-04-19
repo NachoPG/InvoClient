@@ -1,6 +1,11 @@
 {
-    "/": {
-        "controller": "MainController",
-        "action": "listadoTarea"
+    "/getClientId": {
+        "controller": "ClientController",
+        "action": "getClientId"
+    },
+    "/getAllClients":{
+        "controller":"ClientController",
+        "action":"getAll"
     }
+
 }
