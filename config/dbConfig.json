@@ -1,6 +1,6 @@
 {
-    "server": "mysql",
+    "server": "localhost",
     "user": "root",
-    "password": "admin",
+    "password": "",
     "dbname": "invoclient"
 }
