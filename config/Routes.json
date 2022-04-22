@@ -3,9 +3,20 @@
         "controller": "ClientController",
         "action": "getClientId"
     },
-    "/getAllClients":{
-        "controller":"ClientController",
-        "action":"getAll"
+    "/getAllClients": {
+        "controller": "ClientController",
+        "action": "getAllClients"
+    },
+    "/getClientByName": {
+        "controller": "ClientController",
+        "action": "getClientByName"
+    },
+    "/insertNewClient": {
+        "controller": "ClientController",
+        "action": "insertClient"
+    },
+    "/deleteClient": {
+        "controller": "ClientController",
+        "action": "deleteClient"
     }
-
 }

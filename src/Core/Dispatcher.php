@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Core\Interfaces\IRequest;
 use App\Core\Interfaces\IRoutes;
+use App\Controllers\BaseController;
 
 class Dispatcher
 {
@@ -17,13 +18,15 @@ class Dispatcher
     }
     private function dispatch()
     {
+        $baseControler = new BaseController();
+
         if (isset($this->routeList[$this->currentRequest->getRoute()])) {
             $controllerClass = "App\\Controllers\\" . $this->routeList[$this->currentRequest->getRoute()]["controller"];
             $controller =  new $controllerClass;
             $action = $this->routeList[$this->currentRequest->getRoute()]["action"];
             $controller->$action(...$this->currentRequest->getParams());
         } else {
-            echo "ruta no existe";
+            $baseControler->sendOutput('', array('HTTP/1.1 404 Not Found'));
         }
     }
 }

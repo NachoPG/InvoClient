@@ -34,4 +34,13 @@ class Invoice
         $sql = "INSERT FROM factura (Nombre_art,Unidades,Precio_Unidad,Importe Total,Descripcion,Cantidad,Fecha_Pedido,Cliente_Id) VALUES ('" . $name_article . "'," . $data["unidades"] . "," . $data["precio"] . "," . $data["importe_total"] . "," . $data["cantidad"] . ",'" . $description . "'," . $dateFactura . "," . $data["cliente_id"] . ")";
         return $this->database->actionSQL($sql);
     }
+
+    public function updateInvoice($id, $data)
+    {
+        $name_article = $this->database->escape($data["name_article"]);
+        $description = $this->database->escape($data["description"]);
+
+        $sql = "UPDATE factura SET Nombre_art=$name_article,Unidades=" . $data["unidades"] . ",Precio_Unidad=" . $data["price"] . ",Importe_Total=" . $data["importe"] . ",Descripcion=$description,Cantidad=" . $data["cantidad"] . ",Cliente_Id=" . $data["cliente_id"] . "WHERE Id_Factura=$id";
+        return $this->database->actionSQL($sql);
+    }
 }

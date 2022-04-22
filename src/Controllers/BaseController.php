@@ -5,7 +5,7 @@ namespace App\Controllers;
 
 class BaseController
 {
-    protected function sendOutput($data, $httpHeaders = array())
+    public function sendOutput($data, $httpHeaders = array())
     {
         header_remove('Set-Cookie');
 

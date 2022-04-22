@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Interfaces\IDataBase;
+use mysqli;
 
 class DataBase implements IDataBase
 {
@@ -20,7 +21,11 @@ class DataBase implements IDataBase
         $password = $this->dbConfig["password"];
         $dbName = $this->dbConfig["dbname"];
         // Create connection
-        $this->conn = new \mysqli($servername, $username, $password, $dbName);
+        $this->conn = new \mysqli($servername, $username, $password, $dbName, 3306);
+        // if (!$this->conn) {
+        //     die("Connection failed: " . mysqli_connect_error());
+        // }
+        // echo "Connected successfully";
     }
 
     public function executeSQL($sql)

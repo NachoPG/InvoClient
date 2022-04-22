@@ -35,6 +35,8 @@ class Users
         return $username;
     }
 
+    
+
     public function register($data)
     {
         $name = $this->database->escape($data["name"]);

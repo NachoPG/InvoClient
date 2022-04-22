@@ -15,20 +15,25 @@ class Client
 
     public function getClientById($id)
     {
-        $sql = "SELECT * FROM Cliente WHERE Id_Client=$id";
-        $result = $this->database->executeSQL($sql);
-        return array_shift($result);
+        $sql = "SELECT * FROM cliente WHERE Id_Cliente=$id";
+        return $this->database->executeSQL($sql);
     }
 
     public function getAllClients()
     {
-        $sql = "SELECT * FROM Cliente";
+        $sql = "SELECT * FROM cliente";
+        return $this->database->executeSQL($sql);
+    }
+
+    public function getClientByNameCompany($nameCompany)
+    {
+        $sql = "SELECT * FROM cliente WHERE Razon_social=$nameCompany";
         return $this->database->executeSQL($sql);
     }
 
     public function deleteClient($id)
     {
-        $sql = "DELETE FROM Cliente WHERE Id_Client=$id";
+        $sql = "DELETE FROM Cliente WHERE Id_Cliente=$id";
         return $this->database->actionSQL($sql);
     }
 
@@ -36,10 +41,10 @@ class Client
     {
         $nameCompany = $this->database->escape($data["nameCompany"]);
         $direction = $this->database->escape($data["direction"]);
-        $provincia = $this->database->escape($data["provincia"]);
+        $provincia = $this->database->escape($data["province"]);
         $country = $this->database->escape($data["country"]);
         $cif = $this->database->escape($data["cif"]);
-        $poblacion = $this->database->escape($data["poblacion"]);
+        $poblacion = $this->database->escape($data["population"]);
         $code_postal = $this->database->escape($data["code_postal"]);
 
         $sql = "INSERT INTO cliente (Razon_social,Direccion,Provincia,Pais,Cif,Poblacion,Codigo_Postal) VALUES ('" . $nameCompany . "','" . $direction . "','" . $provincia . "','" . $country . "','" . $cif . "','" . $poblacion . "'," . $code_postal . ")";

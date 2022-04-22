@@ -1,5 +1,5 @@
 <?php
-require_once "./vendor/autoload.php";
+require_once "../vendor/autoload.php";
 
 use App\Core\Dispatcher;
 use App\Core\Request;
