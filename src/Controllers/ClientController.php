@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\Client;
 use App\Core\DataBase;
-use App\Core\Request;
 use Error;
 
 class ClientController extends BaseController
@@ -14,7 +13,6 @@ class ClientController extends BaseController
     {
         $clientModel = new Client(new DataBase);
         $resultData = $clientModel->getClientById($id);
-        //Comprobacion de datos 
         $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
     }
 
@@ -27,8 +25,8 @@ class ClientController extends BaseController
 
     public function getClientByName($name)
     {
-        $encondeParamUrl = urldecode($name);
         $clientModel = new Client(new DataBase);
+        $encondeParamUrl = urldecode($name);
         $resultData = $clientModel->getClientByNameCompany($encondeParamUrl);
         $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
     }
@@ -53,9 +51,20 @@ class ClientController extends BaseController
         if ($clientModel->insertClient($arrayData)) {
             $this->sendOutput("Se ha insertado correctamente", array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         } else {
-            $strErrorDesc = 'Something went wrong! Please contact support.';
+            $strErrorDesc = 'Something went wrong!';
             $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             $this->sendOutput($strErrorDesc, array($strErrorHeader));
         }
+    }
+
+    public function updateClient($id)
+    {
+        $clientModel = new Client(new DataBase);
+        if (count($_POST)) {
+            if ($clientModel->updateClient($_POST, $id)) {
+                $this->sendOutput("Se ha actualizado correctamente", array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            }
+        }
+        new Client($clientModel->getClientById($id));
     }
 }

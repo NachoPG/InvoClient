@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Core\Interfaces\IDataBase;
-
+use Exception;
 
 class Users
 {
@@ -31,11 +31,9 @@ class Users
         $firstSurname = substr($splitSurname[0], 0, 2);
         $secondSurname = substr($splitSurname[1], 0, 2);
 
-        $username = ($firtsLettersName + $firstSurname + $secondSurname);
+        $username = ($firtsLettersName . $firstSurname . $secondSurname);
         return $username;
     }
-
-
 
     public function register($data)
     {
@@ -43,8 +41,7 @@ class Users
         $surname = $this->database->escape($data["surname"]);
         $username = $this->createUsername($name, $surname);
         $password = $this->database->escape($data["password"]);
-        $passwordCrypted = password_hash($password, PASSWORD_BCRYPT);
-
+        $passwordCrypted = password_hash(base64_encode(hash('sha256', $password, true)), PASSWORD_DEFAULT);
         $sql = "INSERT INTO usuarios ('Nombre','Apellidos','Username','Password','Admin') VALUES ('" . $name . "','" . $surname . "','" . $username . "','" . $passwordCrypted . "'," . $data["admin"] . ")";
         return $this->database->actionSQL($sql);
     }
@@ -55,13 +52,21 @@ class Users
         return $this->database->executeSQL($sql);
     }
 
-    public function checkPasswordUser($id, $password)
+    public function changePassword($id, $data)
     {
-        $password = $this->database->escape($password);
-        $passwordHash = password_hash(base64_encode(hash('sha256', $password, true)), PASSWORD_DEFAULT);
-        $sql = "SELECT 'Password' FROM Usuarios WHERE Id_Usuario=$id AND 'Password'=$passwordHash";
-        $response = $this->database->executeSQL($sql);
+        $oldPassword = $this->database->escape($data["oldPassword"]);
+        $newPassword = $this->database->escape($data["newPassword"]);
+        if (!$this->checkPasswordUser($id, $oldPassword)) return throw new Exception("Error: Password is not correct");
+        $passwordCrypted = password_hash(base64_encode(hash('sha256', $newPassword, true)), PASSWORD_DEFAULT);
+        $sql = "UPDATE usuarios SET 'Password'=$passwordCrypted WHERE Id_Usuario=$id";
+        return $this->database->actionSQL($sql);
+    }
 
+    private function checkPasswordUser($id, $password)
+    {
+        $passwordHash = password_hash(base64_encode(hash('sha256', $password, true)), PASSWORD_DEFAULT);
+        $sql = "SELECT 'Password' FROM usuarios WHERE Id_Usuario=$id AND 'Password'=$passwordHash";
+        $response = $this->database->executeSQL($sql);
         return (password_verify(base64_encode(
             hash('sha256', $password, true)
         ), $response["Password"]));
