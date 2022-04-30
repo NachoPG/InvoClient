@@ -35,7 +35,7 @@ class Users
         return $username;
     }
 
-    
+
 
     public function register($data)
     {
@@ -53,5 +53,17 @@ class Users
     {
         $sql = "SELECT 'Admin' from usuarios WHERE Id_Usuario=$id";
         return $this->database->executeSQL($sql);
+    }
+
+    public function checkPasswordUser($id, $password)
+    {
+        $password = $this->database->escape($password);
+        $passwordHash = password_hash(base64_encode(hash('sha256', $password, true)), PASSWORD_DEFAULT);
+        $sql = "SELECT 'Password' FROM Usuarios WHERE Id_Usuario=$id AND 'Password'=$passwordHash";
+        $response = $this->database->executeSQL($sql);
+
+        return (password_verify(base64_encode(
+            hash('sha256', $password, true)
+        ), $response["Password"]));
     }
 }
