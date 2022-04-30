@@ -1,0 +1,60 @@
+<div #tableClients *ngIf="clientsList.length > 0" class="table-responsive mt-5">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Clients Information</h2>
+                </div>
+                <div class="col-sm-4">
+                    <div class="search-box">
+                        <input type="text" [(ngModel)]="searchValue" class="form-control" placeholder="Search…">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name Company</th>
+                    <th>Direction</th>
+                    <th>Phone</th>
+                    <th>Province</th>
+                    <th>Country</th>
+                    <th>Cif</th>
+                    <th>Population</th>
+                    <th>Code Postal</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let client of clientsList | slice: (page-1) * pageSize : page * pageSize | searchFilter:searchValue">
+                    <td>{{client.Id_Cliente}}</td>
+                    <td>{{client.Razon_social}}</td>
+                    <td>{{client.Direccion}}</td>
+                    <td>{{client.Telefono}}</td>
+                    <td>{{client.Provincia}}</td>
+                    <td>{{client.Pais}}</td>
+                    <td>{{client.Cif}}</td>
+                    <td>{{client.Poblacion}}</td>
+                    <td>{{client.Codigo_Postal}}</td>
+                    <td style="text-align: center;">
+                        <button style="border-radius: 50%;background-color:#22c55e;margin-right:5px"
+                            class="actions btn btn-rounded"><span class="p-button-icon pi pi-pencil"
+                                style="color: white;font-size:12px" aria-hidden="true"></span></button>
+                        <button class="actions btn btn-rounded btn-warning"
+                            style="border-radius: 50%;background-color:#f59e0b"><span class="p-button-icon pi pi-trash"
+                                style="color: white;font-size:12px" aria-hidden="true"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ngb-pagination class="d-flex justify-content-center" [(page)]="page" [pageSize]="pageSize"
+            [collectionSize]="clientsList.length" [boundaryLinks]="true">
+        </ngb-pagination>
+
+    </div>
+</div>

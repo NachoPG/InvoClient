@@ -1,0 +1,24 @@
+<div class="content-login">
+    <div class="wrap-logo">
+        <img src="../../../assets/InvoClient-Logo.png" alt="Logo InvoClient">
+    </div>
+    <div class="form-login">
+        <h2>Member Login</h2>
+        <form (submit)="login()" id="form">
+            <input class="form-control" [(ngModel)]="userCredentials.username" required type="text"
+                placeholder="Username" name="email">
+            <input class="form-control" [(ngModel)]="userCredentials.password" required type="password"
+                placeholder="Password" name="password">
+            <input type="submit" value="LOGIN">
+            <span *ngIf="validatorLogin" style="padding:0; width:200px;margin:0 auto"
+                class="alert alert-danger bg-rounded text-center" role="alert">
+                Compruebas los campos introducidos.
+            </span>
+            <span *ngIf="incorrectLogin" style="padding:0; width:200px;margin:0 auto"
+                class="alert alert-danger bg-rounded text-center" role="alert">
+                Login Incorrecto. Vuelve a intentarlo
+            </span>
+        </form>
+
+    </div>
+</div>
