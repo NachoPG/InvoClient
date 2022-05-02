@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Interfaces\IDataBase;
+use Exception;
 use mysqli;
 
 class DataBase implements IDataBase

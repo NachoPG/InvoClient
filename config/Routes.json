@@ -18,5 +18,17 @@
     "/deleteClient": {
         "controller": "ClientController",
         "action": "deleteClient"
+    },
+    "/register": {
+        "controller": "UserController",
+        "action": "registerUser"
+    },
+    "/login": {
+        "controller": "UserController",
+        "action": "loginUser"
+    },
+    "/changePassword": {
+        "controller": "UserController",
+        "action": "changePassword"
     }
 }
