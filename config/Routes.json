@@ -1,34 +1,38 @@
 {
-    "/getClientId": {
+    "/api/getClientId": {
         "controller": "ClientController",
         "action": "getClientId"
     },
-    "/getAllClients": {
+    "/api/getAllClients": {
         "controller": "ClientController",
         "action": "getAllClients"
     },
-    "/getClientByName": {
+    "/api/getClientByName": {
         "controller": "ClientController",
         "action": "getClientByName"
     },
-    "/insertNewClient": {
+    "/api/insertNewClient": {
         "controller": "ClientController",
         "action": "insertClient"
     },
-    "/deleteClient": {
+    "/api/deleteClient": {
         "controller": "ClientController",
         "action": "deleteClient"
     },
-    "/register": {
+    "/api/register": {
         "controller": "UserController",
         "action": "registerUser"
     },
-    "/login": {
+    "/api/login": {
         "controller": "UserController",
         "action": "loginUser"
     },
-    "/changePassword": {
+    "/api/changePassword": {
         "controller": "UserController",
         "action": "changePassword"
+    },
+    "/api/test": {
+        "controller": "UserController",
+        "action": "test"
     }
 }

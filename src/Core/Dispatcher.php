@@ -13,17 +13,22 @@ class Dispatcher
     public function __construct(IRoutes $routeCollection, IRequest $request)
     {
         $this->routeList = $routeCollection->getRoutes();
-        $this->currentRequest = $request;
+        $this->currentRequest =  $request;
+        // var_dump($this->currentRequest);
         $this->dispatch();
     }
     private function dispatch()
     {
         $baseControler = new BaseController();
 
-        if (isset($this->routeList[$this->currentRequest->getRoute()])) {
-            $controllerClass = "App\\Controllers\\" . $this->routeList[$this->currentRequest->getRoute()]["controller"];
+        // var_dump($this->currentRequest->getRoute());
+        // var_dump($this->currentRequest->getParams());
+        // die();
+        $routeApi = "/api" . $this->currentRequest->getRoute();
+        if (isset($this->routeList[$routeApi])) {
+            $controllerClass = "App\\Controllers\\" . $this->routeList[$routeApi]["controller"];
             $controller =  new $controllerClass;
-            $action = $this->routeList[$this->currentRequest->getRoute()]["action"];
+            $action = $this->routeList[$routeApi]["action"];
             $controller->$action(...$this->currentRequest->getParams());
         } else {
             $baseControler->sendOutput('', array('HTTP/1.1 404 Not Found'));

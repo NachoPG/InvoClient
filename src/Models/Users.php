@@ -29,8 +29,15 @@ class Users
                 hash('sha256', $passwordEscape, true)
             ), $resultQuery["Password"]);
         } else {
-            echo "No existe ningun usuario con el nombre introducido ";
+            echo json_encode(array("message" => "No existe ningun usuario con el nombre introducido "));
         }
+    }
+
+    public function getUserByUsername($username)
+    {
+        $sql = "SELECT `Id_Usuario`,`Nombre`,`Apellidos`,`Username` FROM usuarios WHERE `Username`='$username'";
+        $response = $this->database->executeSQL($sql);
+        return array_shift($response);
     }
 
     private function createUsername($name, $surname)
@@ -93,7 +100,7 @@ class Users
     {
         $oldPassword = $this->database->escape($data["oldPassword"]);
         $newPassword = $this->database->escape($data["newPassword"]);
-        if (!$this->checkPasswordUser($oldPassword, $data["username"])) return throw new Exception("Error: Password is not correct");
+        if (!$this->checkPasswordUser($oldPassword, $data["username"])) echo json_encode("Error: Password is not correct");
         $passwordCrypted = password_hash(base64_encode(hash('sha256', $newPassword, true)), PASSWORD_DEFAULT);
         $sql = "UPDATE usuarios SET `Password`='" . $passwordCrypted . "' WHERE `Id_Usuario`=" . $data["idUser"] . "";
         return $this->database->actionSQL($sql);

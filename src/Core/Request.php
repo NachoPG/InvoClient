@@ -12,8 +12,8 @@ class Request implements IRequest
     {
         $rawRoute = $_SERVER["REQUEST_URI"];
         $rawRouteElements = explode("/", $rawRoute);
-        $this->route = "/" . $rawRouteElements[1];
-        $this->params = array_slice($rawRouteElements, 2);
+        $this->route = "/" . $rawRouteElements[2];
+        $this->params = array_slice($rawRouteElements, 3);
     }
 
     /**
@@ -21,6 +21,8 @@ class Request implements IRequest
      */
     public function getRoute()
     {
+        // var_dump($this->route);
+
         return $this->route;
     }
 
@@ -29,6 +31,8 @@ class Request implements IRequest
      */
     public function getParams()
     {
+        // var_dump($this->params);
+
         return $this->params;
     }
 }
