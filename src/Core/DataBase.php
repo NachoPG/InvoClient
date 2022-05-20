@@ -41,6 +41,10 @@ class DataBase implements IDataBase
     {
         return $this->conn->real_escape_string($value);
     }
+    public function executeSQLAll($sql)
+    {
+        return $this->conn->query($sql)->fetch_all();
+    }
 
     public function __destruct()
     {

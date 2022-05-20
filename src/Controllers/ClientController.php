@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Client;
 use App\Core\DataBase;
 use Error;
+use Exception;
 
 class ClientController extends BaseController
 {
@@ -13,9 +14,15 @@ class ClientController extends BaseController
     public function getClientId($id)
     {
         $clientModel = new Client(new DataBase);
-        $resultData = $clientModel->getClientById($id);
         $this->verifyToken();
-        $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+        try {
+            $resultData = $clientModel->getClientById($id);
+            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+        } catch (Exception $e) {
+            $strErrorDesc = 'Error:' + $e->getMessage();
+            $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
+        }
     }
 
     public function getAllClients()
@@ -25,9 +32,15 @@ class ClientController extends BaseController
         // header("Access-Control-Allow-Headers: Content-Type, Authorization, Accept, Accept-Language, X-Authorization");
 
         $clientModel = new Client(new DataBase);
-        $resultData = $clientModel->getAllClients();
         $this->verifyToken();
-        $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+        try {
+            $resultData = $clientModel->getAllClients();
+            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+        } catch (Exception $e) {
+            $strErrorDesc = 'Error:' + $e->getMessage();
+            $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
+        }
     }
 
     public function getClientByName($name)
@@ -35,8 +48,14 @@ class ClientController extends BaseController
         $clientModel = new Client(new DataBase);
         $encondeParamUrl = urldecode($name);
         $this->verifyToken();
-        $resultData = $clientModel->getClientByNameCompany($encondeParamUrl);
-        $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+        try {
+            $resultData = $clientModel->getClientByNameCompany($encondeParamUrl);
+            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+        } catch (Exception $e) {
+            $strErrorDesc = 'Error:' + $e->getMessage();
+            $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
+        }
     }
 
     public function deleteClient($id)
@@ -45,10 +64,14 @@ class ClientController extends BaseController
         $this->verifyToken();
         try {
             if ($clientModel->deleteClient($id)) {
-                $this->sendOutput('Se ha eliminado con Exito', array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+                $this->sendOutput(json_encode(array("message" => "Se ha eliminado con Exito")), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            } else {
+                $strErrorDesc = 'No se ha podido eliminar el cliente. Intentelo de nuevo mas tarde';
+                $strErrorHeader = 'HTTP/1.1 404 Internal Server Error';
+                $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
             }
         } catch (Error $e) {
-            $this->sendOutput($e->getMessage(), array('HTTP/1.1 500 Internal Server Error'));
+            $this->sendOutput(json_encode(array("message" => $e->getMessage())), array('HTTP/1.1 500 Internal Server Error'));
         }
     }
 
@@ -56,27 +79,46 @@ class ClientController extends BaseController
     {
         $clientModel = new Client(new DataBase);
         $data = json_decode(file_get_contents('php://input'));
-        $arrayData = array("nameCompany" => $data->nameCompany, "direction" => $data->direction, "province" => $data->province, "country" => $data->country, "cif" => $data->cif, "population" => $data->population, "code_postal" => $data->code_postal);
+        $arrayData = array("nameCompany" => $data->nameCompany, "direction" => $data->direction, "phone" => $data->phone, "email" => $data->email, "province" => $data->province, "country" => $data->country, "cif" => $data->cif, "population" => $data->population, "code_postal" => $data->codePostal);
         $this->verifyToken();
+        $responseCheckNameClient = $clientModel->checkNameClient($data->nameCompany);
+
+        if ($responseCheckNameClient !== null) {
+            $strErrorDesc = 'Ya existe un cliente con el nombre introducido!';
+            $strErrorHeader = 'HTTP/1.1 404 Internal Server Error';
+            $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
+            return;
+        }
         if ($clientModel->insertClient($arrayData)) {
-            $this->sendOutput("Se ha insertado correctamente", array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            $this->sendOutput(json_encode(array("message" => "Se ha insertado correctamente")), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         } else {
             $strErrorDesc = 'Something went wrong!';
-            $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
-            $this->sendOutput($strErrorDesc, array($strErrorHeader));
+            $strErrorHeader = 'HTTP/1.1 404 Internal Server Error';
+            $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
         }
     }
 
     public function updateClient($id)
     {
         $clientModel = new Client(new DataBase);
+        $data = json_decode(file_get_contents('php://input'));
+        $arrayData = array("nameCompany" => $data->nameCompany, "direction" => $data->direction, "phone" => $data->phone, "email" => $data->email, "province" => $data->province, "country" => $data->country, "cif" => $data->cif, "population" => $data->population, "code_postal" => $data->codePostal);
         $this->verifyToken();
+        $response = $clientModel->checkNameClient($data->nameCompany);
 
-        if (count($_POST)) {
-            if ($clientModel->updateClient($_POST, $id)) {
-                $this->sendOutput("Se ha actualizado correctamente", array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
-            }
+        if ($response !== null) {
+            $strErrorDesc = 'Ya existe un cliente con el nombre introducido!';
+            $strErrorHeader = 'HTTP/1.1 404 Internal Server Error';
+            $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
+            return;
         }
-        new Client($clientModel->getClientById($id));
+
+        if ($clientModel->updateClient($arrayData, $id)) {
+            $this->sendOutput(json_encode(array("message" => "Se ha actualizado con exito")), array('Content-Type: application/json', 'HTTP/1.1 204 NOT_CONTENT'));
+        } else {
+            $strErrorDesc = 'Error. No se ha podido actualizar el cliente!';
+            $strErrorHeader = 'HTTP/1.1 404 Internal Server Error';
+            $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
+        }
     }
 }

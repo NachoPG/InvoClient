@@ -5,4 +5,5 @@ interface IDataBase{
     public function executeSQL($sql);
     public function actionSQL($sql);
     public function escape($value);
+    public function executeSQLAll($sql);
 }

@@ -15,6 +15,10 @@
         "controller": "ClientController",
         "action": "insertClient"
     },
+    "/api/client": {
+        "controller": "ClientController",
+        "action": "updateClient"
+    },
     "/api/deleteClient": {
         "controller": "ClientController",
         "action": "deleteClient"
@@ -31,8 +35,32 @@
         "controller": "UserController",
         "action": "changePassword"
     },
-    "/api/test": {
+    "/api/invoices": {
+        "controller": "InvoiceController",
+        "action": "getInvoicesById"
+    },
+    "/api/insertInvoiceFromClient": {
+        "controller": "InvoiceController",
+        "action": "insertInvoiceFromClient"
+    },
+    "/api/updateInvoice": {
+        "controller": "InvoiceController",
+        "action": "updateInvoiceFromClient"
+    },
+    "/api/deleteInvoice": {
+        "controller": "InvoiceController",
+        "action": "deleteInvoiceFromClient"
+    },
+    "/api/users": {
         "controller": "UserController",
-        "action": "test"
+        "action": "getAllUsers"
+    },
+    "/api/updateAdmin": {
+        "controller": "UserController",
+        "action": "updateAdminUser"
+    },
+    "/api/deleteUser": {
+        "controller": "UserController",
+        "action": "deleteUser"
     }
 }

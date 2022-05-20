@@ -16,31 +16,40 @@ class Invoice
 
     public function getInvoicesFromClient($idClient)
     {
-        $sql = "SELECT * FROM factura WHERE Cliente_Id=$idClient";
+        $sql = "SELECT `idInvoice`,`nameArticle`,`price_unit`,`price_total`,`description`,`amount`,`order_date` FROM factura WHERE `Cliente_Id`=$idClient";
         return $this->database->executeSQL($sql);
     }
 
     public function deleteInvoice($id)
     {
-        $sql = "DELETE FROM factura WHERE Id_Factura=$id";
+        $sql = "DELETE FROM factura WHERE idInvoice=$id";
         return $this->database->actionSQL($sql);
     }
 
     public function insertNewInvoice($data)
     {
-        $name_article = $this->database->escape($data["name_article"]);
+        $name_article = $this->database->escape($data["nameArticle"]);
         $description = $this->database->escape($data["description"]);
-        $dateFactura = new DateTime("now");
-        $sql = "INSERT FROM factura (Nombre_art,Unidades,Precio_Unidad,Importe Total,Descripcion,Cantidad,Fecha_Pedido,Cliente_Id) VALUES ('" . $name_article . "'," . $data["unidades"] . "," . $data["precio"] . "," . $data["importe_total"] . "," . $data["cantidad"] . ",'" . $description . "'," . $dateFactura . "," . $data["cliente_id"] . ")";
+        $price_unit = intval($data["price_unit"]);
+        $price_total = intval($data["price_total"]);
+        $amount = intval($data["amount"]);
+        $orderDate = strtotime($data["order_date"]);
+
+        $sql = "INSERT INTO factura (`nameArticle`,`price_unit`,`price_total`,`description`,`amount`,`order_date`,`Cliente_Id`) VALUES ('" . $name_article . "'," . $price_unit . "," . $price_total . ",'" . $description . "'," . $amount . ",'" . date("Y-m-d", $orderDate) . "'," . $data["clientId"] . ")";
         return $this->database->actionSQL($sql);
     }
 
-    public function updateInvoice($id, $data)
+    public function updateInvoice($data)
     {
-        $name_article = $this->database->escape($data["name_article"]);
+        $name_article = $this->database->escape($data["nameArticle"]);
         $description = $this->database->escape($data["description"]);
+        $price_unit = intval($data["price_unit"]);
+        $price_total = intval($data["price_total"]);
+        $amount = intval($data["amount"]);
+        $orderDate = strtotime($data["order_date"]);
+        $idInvoice = $data["idInvoice"];
 
-        $sql = "UPDATE factura SET Nombre_art=$name_article,Unidades=" . $data["unidades"] . ",Precio_Unidad=" . $data["price"] . ",Importe_Total=" . $data["importe"] . ",Descripcion=$description,Cantidad=" . $data["cantidad"] . ",Cliente_Id=" . $data["cliente_id"] . "WHERE Id_Factura=$id";
+        $sql = "UPDATE factura SET `nameArticle`='$name_article',`price_unit`=$price_unit,`price_total`=$price_total,`description`='$description',`amount`=$amount,`order_date`='" . date("Y-m-d", $orderDate) . "' WHERE `idInvoice`=$idInvoice";
         return $this->database->actionSQL($sql);
     }
 }

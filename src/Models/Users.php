@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Core\Interfaces\IDataBase;
 use Exception;
+use PDO;
 
 class Users
 {
@@ -20,7 +21,7 @@ class Users
         $userEscape = $this->database->escape($user);
         $passwordEscape = $this->database->escape($password);
 
-        $sql = "SELECT `Password` FROM usuarios WHERE `Username`='$userEscape'";
+        $sql = "SELECT `Password` FROM usuarios WHERE `username`='$userEscape'";
         $response = $this->database->executeSQL($sql);
         $resultQuery = array_shift($response);
 
@@ -35,7 +36,7 @@ class Users
 
     public function getUserByUsername($username)
     {
-        $sql = "SELECT `Id_Usuario`,`Nombre`,`Apellidos`,`Username` FROM usuarios WHERE `Username`='$username'";
+        $sql = "SELECT `idUser`,`name`,`surname`,`username`,`admin` FROM usuarios WHERE `username`='$username'";
         $response = $this->database->executeSQL($sql);
         return array_shift($response);
     }
@@ -53,29 +54,26 @@ class Users
 
     private function isValidUsername($username)
     {
-        $sql = "SELECT Username FROM usuarios WHERE Username='" . $username . "'";
-        $response = $this->database->executeSQL($sql);
-        $resultQuery = array_shift($response);
-
-
-        if (count($resultQuery) > 0) {
-            $usernameFound = false;
+        $usernameLower = strtolower($username);
+        $sql = "SELECT `username` FROM usuarios WHERE `username` LIKE '" . $usernameLower . "%'";
+        $response = $this->database->executeSQLAll($sql);
+        if (empty($response)) return $usernameLower;
+        if (count($response) > 0) {
+            $finalUsername = $usernameLower;
             $countNumber = 0;
-            $initialUsername = $username;
-            while (!$usernameFound) {
-                $countNumber++;
-                $username = $initialUsername . $countNumber;
-                if (in_array($username, $resultQuery)) {
-                    $usernameFound = false;
+            foreach ($response as $value) {
+                $initialUsername = $usernameLower;
+                if (in_array($finalUsername, $value)) {
+                    $countNumber++;
+                    $finalUsername = $initialUsername . $countNumber;
                 } else {
-                    $usernameFound = true;
+                    $finalUsername = $usernameLower;
                 }
             }
+            return $finalUsername;
         } else {
-            $usernameFound = true;
+            return $usernameLower;
         }
-
-        return $username;
     }
 
     public function register($data)
@@ -83,39 +81,57 @@ class Users
         $name = $this->database->escape($data["name"]);
         $surname = $this->database->escape($data["surname"]);
         $username = $this->createUsername($name, $surname);
-        $password = $this->database->escape($data["password"]);
+        $password = "Cambiame123";
         $passwordCrypted = password_hash(base64_encode(hash('sha256', $password, true)), PASSWORD_DEFAULT);
-        // $isAdmin = $data["admin"] ? 1 : 0;
-        $sql = "INSERT INTO usuarios (`Nombre`,`Apellidos`,`Username`,`Password`,`Admin`) VALUES ('" . $name . "','" . $surname . "','" . $username . "','" . $passwordCrypted . "'," . $$data["admin"] ? 1 : 0 . ")";
+        $isAdmin = $data["admin"] ? 1 : 0;
+        $sql = "INSERT INTO usuarios (`name`,`surname`,`username`,`Password`,`admin`) VALUES ('" . $name . "','" . $surname . "','" . $username . "','" . $passwordCrypted . "'," . $isAdmin . ")";
         return $this->database->actionSQL($sql);
     }
 
     public function checkAdmin($id)
     {
-        $sql = "SELECT `Admin` from usuarios WHERE Id_Usuario=$id";
-        return $this->database->executeSQL($sql);
+        $sql = "SELECT `admin` from usuarios WHERE `idUser`=$id";
+        $result = $this->database->executeSQL($sql);
+        return array_shift($result);
     }
 
-    public function changePassword($data)
+
+    public function changePassword($newPassword, $idUser)
     {
-        $oldPassword = $this->database->escape($data["oldPassword"]);
-        $newPassword = $this->database->escape($data["newPassword"]);
-        if (!$this->checkPasswordUser($oldPassword, $data["username"])) echo json_encode("Error: Password is not correct");
+        // $oldPassword = $this->database->escape($data["oldPassword"]);
+        $newPassword = $this->database->escape($newPassword);
         $passwordCrypted = password_hash(base64_encode(hash('sha256', $newPassword, true)), PASSWORD_DEFAULT);
-        $sql = "UPDATE usuarios SET `Password`='" . $passwordCrypted . "' WHERE `Id_Usuario`=" . $data["idUser"] . "";
+        $sql = "UPDATE usuarios SET `Password`='" . $passwordCrypted . "' WHERE `idUser`=" . $idUser . "";
         return $this->database->actionSQL($sql);
     }
 
-    private function checkPasswordUser($oldPassword, $username)
+    public function checkPasswordUser($oldPassword, $username)
     {
         // $passwordHash = password_hash(base64_encode(hash('sha256', $password, true)), PASSWORD_DEFAULT);
-        $sql = "SELECT `Password` FROM usuarios WHERE `Username`='$username'";
+        $sql = "SELECT `Password` FROM usuarios WHERE `username`='$username'";
         $response = $this->database->executeSQL($sql);
         $resultQuery = array_shift($response);
         if (count($resultQuery) !== 1) return throw new Exception("No existe ningun usuario con el nombre introducido");
-
         return password_verify(base64_encode(
             hash('sha256', $oldPassword, true)
         ), $resultQuery["Password"]);
+    }
+
+    public function getAllUsers()
+    {
+        $sql = "SELECT `idUser`,`name`,`surname`,`username`,`admin` FROM usuarios";
+        return $this->database->executeSQL($sql);
+    }
+
+    public function updateAdminUser($id)
+    {
+        $sql = "UPDATE usuarios SET `admin`=true WHERE `idUser`=$id";
+        return $this->database->actionSQL($sql);
+    }
+
+    public function deleteUser($idUser)
+    {
+        $sql = "DELETE FROM usuarios WHERE `idUser`=$idUser";
+        return $this->database->actionSQL($sql);
     }
 }

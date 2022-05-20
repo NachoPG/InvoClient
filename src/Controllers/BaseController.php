@@ -25,20 +25,20 @@ class BaseController
 
     protected function generateToken($dataUser)
     {
-        $issuer_claim = "LOCALHOST API"; // this can be the servername
+        $issuer_claim = "LOCALHOST API";
         $audience_claim = "THE_AUDIENCE";
-        $issuedat_claim = time(); // issued at
-        $expire_claim = $issuedat_claim + (3600 * 24); // expire time in seconds
+        $issuedat_claim = time();
+        $expire_claim = $issuedat_claim + (3600 * 24); // 1 day
         $token = array(
             "iss" => $issuer_claim,
             "aud" => $audience_claim,
             "iat" => $issuedat_claim,
             "exp" => $expire_claim,
             "data" => array(
-                "id" => $dataUser["Id_Usuario"],
-                "firstname" => $dataUser["Nombre"],
-                "lastname" => $dataUser["Apellidos"],
-                "username" => $dataUser["Username"]
+                "idUser" => $dataUser["idUser"],
+                "firstname" => $dataUser["name"],
+                "lastname" => $dataUser["surname"],
+                "username" => $dataUser["username"]
             )
         );
 
