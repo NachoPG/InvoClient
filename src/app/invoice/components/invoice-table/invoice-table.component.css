@@ -1,0 +1,19 @@
+.content-actions-table {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px black;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+input.ng-dirty.ng-valid[required],
+input.ng-dirty.ng-valid.required,
+.p-inputnumber.ng-dirty.ng-valid.required,
+.p-inputnumber.ng-dirty.ng-valid[required] {
+  border: 1px solid #42a948; /* green */
+}
+
+input.ng-dirty.ng-invalid:not(form) {
+  border: 1px solid #a94442; /* red */
+}

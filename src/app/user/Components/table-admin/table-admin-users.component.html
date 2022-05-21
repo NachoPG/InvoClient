@@ -1,0 +1,88 @@
+<div class="content-actions-table">
+    <div class="box-new">
+        <button pButton pRipple label="New" pTooltip="Create a Client" tooltipPosition="bottom"
+            (click)="showDialogCreate()" style="width: 100px;background-color:#0d6efd" icon="pi pi-plus"
+            class="mr-1"></button>
+    </div>
+</div>
+
+<div *ngIf="listUsers.length > 0" class="table-responsive mt-4">
+    <div class="d-flex justify-content-end">
+        <div style="position: relative" class="search-box">
+            <span class="p-input-icon-left" style="width: 300px;">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchValue" style="padding-left: 35px" class="form-control"
+                    placeholder="Search..." />
+                <div *ngIf="searchValue"
+                    style="position: absolute;top: 7px;left: 270px;background-color:rgb(222, 222, 222);border-radius:50%"
+                    class="icon-time">
+                    <button (click)="resetSearch()" style="border: none;background-color:transparent"><i
+                            style="font-size: 13px;" class="pi pi-times"></i></button>
+                </div>
+            </span>
+        </div>
+    </div>
+    <table class="table table-striped table-hover mt-2" style="text-align: center;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Username</th>
+                <th>Admin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="padding:10px 0px"
+                *ngFor="let user of listUsers | slice: (page-1) * pageSize : page * pageSize | searchFilterUsers:searchValue">
+                <td>{{user.idUser}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.surname}}</td>
+                <td>{{user.username}}</td>
+                <td [ngStyle]="{
+                    color: user.admin === '1'
+                      ? '#26ff00'
+                      : 'red'
+                  }">{{user.admin | isAdmin}}</td>
+                <td style="text-align: center;">
+                    <button class="actions btn btn-rounded" (click)="confirmDelete(user.idUser)"
+                        style="border-radius: 50%;background-color:#e46969"><span class="p-button-icon pi pi-trash"
+                            style="color: white;font-size:14px" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ngb-pagination class="d-flex justify-content-center" [(page)]="page" [pageSize]="pageSize"
+        [collectionSize]="listUsers.length" [boundaryLinks]="true">
+    </ngb-pagination>
+
+    <p-confirmDialog [style]="{width: '400px'}" [baseZIndex]="10000"></p-confirmDialog>
+</div>
+<p-toast></p-toast>
+<p-dialog [(visible)]="display" [style]="{width: '450px'}" header="Create User" styleClass="p-fluid" [modal]="true">
+    <ng-template pTemplate="content">
+        <section class="content-form-edit">
+            <div class="input-name form-group" style="margin: 10px 0px">
+                <label for="name">Nombre</label>
+                <input type="text" [(ngModel)]="userCreateActive.name" class="form-control" id="name" required
+                    autofocus />
+                <small class="p-error" *ngIf="!userCreateActive.name">Name is required.</small>
+            </div>
+            <div class="input-apellidos form-group" style="margin: 10px 0px">
+                <label for="Apellidos">Apellidos</label>
+                <input type="text" [(ngModel)]="userCreateActive.surname" class="form-control" required />
+                <small class="p-error" *ngIf="!userCreateActive.surname">Surname is required.</small>
+            </div>
+            <div class="input-admin form-group" style="margin: 15px 0px">
+                <h6>Admin</h6>
+                <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+            </div>
+        </section>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button (click)="saveUser()" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+    </ng-template>
+</p-dialog>

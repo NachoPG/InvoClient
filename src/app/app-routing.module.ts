@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { UserGuard } from './guards/user.guard';
 import { MainPageComponent } from './home/pages/main-page/main-page.component';
@@ -11,6 +12,17 @@ const routes: Routes = [
     loadChildren: () =>
       import('./client/client.module').then((m) => m.ClientModule),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'invoice/:clientId',
+    loadChildren: () =>
+      import('./invoice/invoice.module').then((m) => m.InvoiceModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin-panel',
+    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+    canActivate: [AdminGuard],
   },
 ];
 

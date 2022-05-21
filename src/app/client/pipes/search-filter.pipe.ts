@@ -12,12 +12,13 @@ export class SearchFilterPipe implements PipeTransform {
 
     return listClients.filter(
       (client) =>
-        client.Razon_social.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.Provincia.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.Poblacion.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.Cif.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.Pais.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.Id_Cliente.toLowerCase().includes(searchValue.toLowerCase())
+        client.nameCompany.toLowerCase().includes(searchValue.toLowerCase()) ||
+        client.province.toLowerCase().includes(searchValue.toLowerCase()) ||
+        client.population.toLowerCase().includes(searchValue.toLowerCase()) ||
+        client.cif.toLowerCase().includes(searchValue.toLowerCase()) ||
+        client.country.toLowerCase().includes(searchValue.toLowerCase()) ||
+        client.idClient.toLowerCase().includes(searchValue.toLowerCase()) ||
+        client.email.toLowerCase().includes(searchValue.toLowerCase())
     );
   }
 }

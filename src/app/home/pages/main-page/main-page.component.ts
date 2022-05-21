@@ -16,7 +16,8 @@ export class MainPageComponent implements OnInit {
 
   login(user: { username: ''; password: '' }) {
     this.authService.loginUser(user).subscribe({
-      next: () => {
+      next: (response) => {
+        localStorage.setItem('admin', response.admin);
         this.router.navigate(['client']);
       },
       error: () => (this.incorrectLogin = true),

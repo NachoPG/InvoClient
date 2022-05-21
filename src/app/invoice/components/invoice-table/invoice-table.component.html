@@ -1,0 +1,126 @@
+<div class="content-actions-table">
+    <div class="box-new">
+        <button pButton pRipple label="New" pTooltip="Create a Invoice" tooltipPosition="top"
+            (click)="showDialogCreate()" style="width: 100px;background-color:#0d6efd" icon="pi pi-plus"
+            class="mr-1"></button>
+    </div>
+    <div class="flex">
+        <button [disabled]="invoiceData.length === 0" pTooltip="Export to XLS" (click)="exportExcel()" type="button"
+            pButton pRipple icon="pi pi-file-excel" class="p-button-success me-2" tooltipPosition="bottom"></button>
+        <button [disabled]="invoiceData.length === 0" (click)="exportPdf()" pTooltip="Export to PDF"
+            tooltipPosition="bottom" type="button" pButton pRipple icon="pi pi-file-pdf"
+            class="p-button-warning me-2"></button>
+    </div>
+</div>
+
+<div *ngIf="invoiceData.length > 0" class="table-responsive mt-4">
+    <div class="d-flex justify-content-between">
+        <div style="width: 200px;" class="search-date-box">
+            <input type="date" class="form-control" [(ngModel)]="searchValueDate">
+        </div>
+        <div style="position: relative" class="search-box">
+            <span class="p-input-icon-left" style="width: 300px;">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchValue" style="padding-left: 35px" class="form-control"
+                    placeholder="Search..." />
+                <div *ngIf="searchValue"
+                    style="position: absolute;top: 7px;left: 270px;background-color:rgb(222, 222, 222);border-radius:50%"
+                    class="icon-time">
+                    <button (click)="resetSearch()" style="border: none;background-color:transparent"><i
+                            style="font-size: 13px;" class="pi pi-times"></i></button>
+                </div>
+            </span>
+        </div>
+    </div>
+    <table class="table table-striped table-hover" style="text-align: center;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name Article</th>
+                <th>Price Unit</th>
+                <th>Amount</th>
+                <th>Total</th>
+                <th>Description</th>
+                <th>Order Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="padding:10px 0px"
+                *ngFor="let invoice of invoiceData | slice: (page-1) * pageSize : page * pageSize | searchFilterInvoice:searchValue | searchFilterDate:searchValueDate">
+                <td>{{invoice.idInvoice}}</td>
+                <td>{{invoice.nameArticle}}</td>
+                <td>{{invoice.price_unit}}€</td>
+                <td>{{invoice.amount}}</td>
+                <td>{{invoice.price_total}}€</td>
+                <td>{{invoice.description}}</td>
+                <td>{{invoice.order_date | date:'dd-MM-yyyy'}}</td>
+                <td style="text-align: center;">
+                    <button (click)="showDialogEdit(invoice)"
+                        style="border-radius: 50%;background-color:#80d780;margin-right:5px"
+                        class="actions btn btn-rounded"><span class="p-button-icon pi pi-pencil"
+                            style="color: white;font-size:14px" aria-hidden="true"></span></button>
+                    <button (click)="confirmDelete(invoice.idInvoice)" class="actions btn btn-rounded"
+                        style="border-radius: 50%;background-color:#e46969"><span class="p-button-icon pi pi-trash"
+                            style="color: white;font-size:14px" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngb-pagination class="d-flex justify-content-center" [(page)]="page" [pageSize]="pageSize"
+        [collectionSize]="invoiceData.length" [boundaryLinks]="true">
+    </ngb-pagination>
+</div>
+<p-dialog [(visible)]="display" [style]="{width: '450px'}" header="Invoice Details" styleClass="p-fluid" [modal]="true">
+    <ng-template pTemplate="content">
+        <section class="content-form-edit">
+            <form #invoiceForm="ngForm">
+                <div class="form-group" style="margin: 10px 0px">
+                    <label class="form-label" for="nameArticle">Article Name</label>
+                    <input type="text" placeholder="Nombre Articulo" class="form-control"
+                        [(ngModel)]="invoiceInfoActive.nameArticle" name="nameArticle" #nameArticle="ngModel" id="name"
+                        required autofocus />
+                    <small class="p-error" *ngIf="nameArticle.dirty && !invoiceInfoActive.nameArticle">Este campo es
+                        requerido</small>
+                </div>
+                <div class="form-group" style="margin: 10px 0px">
+                    <label class="form-label" for="direction">Unit Price</label>
+                    <p-inputNumber placeholder="Unit Price" [(ngModel)]="invoiceInfoActive.price_unit" mode="currency"
+                        currency="EUR" locale="es-ES" name="unitPrice" #unitPrice="ngModel" [required]="true">
+                    </p-inputNumber>
+                    <small class="p-error" *ngIf="unitPrice.dirty && !invoiceInfoActive.price_unit">Este campo es
+                        requerido</small>
+                </div>
+                <div class="form-group" style="margin: 10px 0px">
+                    <label class="form-label" for="amount">Amount</label>
+                    <input type="number" placeholder="Amount" name="amount" #amount="ngModel" class="form-control"
+                        [(ngModel)]="invoiceInfoActive.amount" required>
+                    <small class="p-error" *ngIf="amount.dirty && !invoiceInfoActive.amount">Este campo es
+                        requerido</small>
+                </div>
+                <div class="form-group" style="margin: 10px 0px">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description"
+                        [(ngModel)]="invoiceInfoActive.description" #description="ngModel" required cols="30"
+                        rows="10"></textarea>
+                    <small class="p-error" *ngIf="description.dirty && !invoiceInfoActive.description">Este campo es
+                        requerido</small>
+                </div>
+                <div class="form-group" style="margin: 10px 0px">
+                    <label class="form-label" for="order-date">Order Date</label>
+                    <input type="date" class="form-control" #orderDate="ngModel"
+                        [(ngModel)]="invoiceInfoActive.order_date" name="orderDate" required />
+                    <small class="p-error" *ngIf="orderDate.dirty && !invoiceInfoActive.order_date">Este campo es
+                        requerido</small>
+                </div>
+
+                <div class="buttons-actions d-flex justify-content-end mt-4">
+                    <button (click)="saveInvoice()" [disabled]="invoiceForm.invalid" style="width: 120px;" pButton
+                        pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+                </div>
+            </form>
+        </section>
+    </ng-template>
+</p-dialog>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '400px'}" [baseZIndex]="10000"></p-confirmDialog>

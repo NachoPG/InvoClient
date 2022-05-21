@@ -1,11 +1,12 @@
 export interface Clients {
-  Id_Cliente: string;
-  Razon_social: string;
-  Direccion: string;
-  Telefono: string;
-  Provincia: string;
-  Pais: string;
-  Cif: string;
-  Poblacion: string;
-  Codigo_Postal: string;
+  idClient: string;
+  nameCompany: string;
+  direction: string;
+  phone: string;
+  email:string;
+  province: string;
+  country: string;
+  cif: string;
+  population: string;
+  codePostal: string;
 }

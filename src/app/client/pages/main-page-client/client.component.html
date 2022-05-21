@@ -1,3 +1,15 @@
-<div class="container">
-    <app-table-clients [clientsList]="clientsList"></app-table-clients>
-</div>
+<section id="page-container">
+    <header>
+        <app-navbar></app-navbar>
+    </header>
+    <div class="container-fluid p-5">
+        <main>
+            <h2 class="d-block border-bottom text-center mb-3 pb-2">Clients Information</h2>
+
+            <app-table-clients (onClickDelete)="deleteClient($event)" (clientCreate)="addClient($event)"
+                (clientEdit)="editClient($event)" [clientsList]="clientsList" [errorTextUpdate]="errorTextUpdate"
+                [errorTextCreate]="errorTextCreate" [showErrorDelete]="errorDelete" [errorUpdate]="errorUpdate"
+                [errorCreate]="errorCreate" (onClickInvoice)="showInvoicesFromClient($event)"></app-table-clients>
+        </main>
+    </div>
+</section>

@@ -1,0 +1,14 @@
+.info-user {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.info-user .info {
+  margin-bottom: 2rem;
+}
+
+.info h5 {
+  margin-top: 10px;
+}

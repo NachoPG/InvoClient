@@ -1,0 +1,36 @@
+<section class="content-profile">
+    <div class="info-user">
+        <div class="image-profile">
+            <img src="../../../../assets/user-logo.png" width="250" alt="Image Perfil Usuario">
+        </div>
+        <div class="info">
+            <h5>Nombre</h5>
+            <input type="text" class="form-control" [value]="name" readonly>
+            <h5>Apellidos</h5>
+            <input type="text" class="form-control" [value]="surname" readonly>
+            <h5>Nombre Usuario</h5>
+            <input type="text" class="form-control" [value]="username" readonly>
+            <button [disabled]="!isAdmin" (click)="navigateToAdmin()"
+                class="btn btn-primary d-block mx-auto mt-4">Acceso Admin</button>
+        </div>
+    </div>
+
+    <div style="margin:20px" class="form-password">
+        <h4 style="text-align: center">Change Password</h4>
+        <form (submit)="changePassword()" style="margin-top: 20px;">
+            <div class="box-oldPassword mb-3">
+                <label for="oldPassword" class="block">Old Password</label>
+                <input type="password" name="oldPassword" class="form-control" pInputText
+                    [(ngModel)]="dataPassword.oldPassword">
+            </div>
+            <div class="box-newPassword">
+                <label for="newPassword" class="block">New Password</label>
+                <input type="password" class="form-control" name="newPassword" pInputText
+                    [(ngModel)]="dataPassword.newPassword">
+            </div>
+            <input style="border-radius: 10px;" type="submit" class="btn btn-primary d-block mx-auto mt-4"
+                value="Confirm Changes">
+        </form>
+    </div>
+    <p-toast></p-toast>
+</section>

@@ -23,7 +23,6 @@ export class UserGuard implements CanActivate {
       this.router.navigate(['client']);
       return false;
     }
-    console.log(this.authService.verifyAuthUser());
 
     return true;
   }

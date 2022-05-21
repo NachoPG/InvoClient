@@ -30,6 +30,10 @@ export class AuthService {
       tap((authToken) => {
         this._auth = authToken;
         localStorage.setItem('token', authToken.token);
+        const dataUser = this.jwtHelperService.decodeToken(
+          localStorage.getItem('token')!
+        );
+        localStorage.setItem('user', JSON.stringify(dataUser.data));
       })
     );
   }

@@ -1,0 +1,12 @@
+<section id="page-container">
+    <header>
+        <app-navbar></app-navbar>
+    </header>
+    <div class="container-fluid p-5">
+        <main>
+            <app-table-admin-users (onSubmitCreateUser)="createUser($event)" [showErrorDelete]="errorDelete"
+                (onClickDelete)="deleteUser($event)" [showErrorCreate]="errorCreate" [listUsers]="usersData">
+            </app-table-admin-users>
+        </main>
+    </div>
+</section>

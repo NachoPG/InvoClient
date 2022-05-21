@@ -1,0 +1,9 @@
+<section class="content-page">
+    <header>
+        <app-navbar></app-navbar>
+    </header>
+    <main class="container">
+        <app-profile (onSubmitPassword)="changePassword($event)" [showErrorPassword]="errorResponsePassword">
+        </app-profile>
+    </main>
+</section>
