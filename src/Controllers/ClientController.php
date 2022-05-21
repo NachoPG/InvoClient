@@ -106,12 +106,15 @@ class ClientController extends BaseController
         $this->verifyToken();
         $response = $clientModel->checkNameClient($data->nameCompany);
 
-        if ($response !== null) {
+
+        if ($response !== null && $response["nameCompany"] !== $data->nameCompany) {
             $strErrorDesc = 'Ya existe un cliente con el nombre introducido!';
             $strErrorHeader = 'HTTP/1.1 404 Internal Server Error';
             $this->sendOutput(json_encode(array("message" => $strErrorDesc)), array($strErrorHeader));
             return;
         }
+
+
 
         if ($clientModel->updateClient($arrayData, $id)) {
             $this->sendOutput(json_encode(array("message" => "Se ha actualizado con exito")), array('Content-Type: application/json', 'HTTP/1.1 204 NOT_CONTENT'));
