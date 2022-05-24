@@ -10,8 +10,8 @@
             <input type="text" class="form-control" [value]="surname" readonly>
             <h5>Nombre Usuario</h5>
             <input type="text" class="form-control" [value]="username" readonly>
-            <button [disabled]="!isAdmin" (click)="navigateToAdmin()"
-                class="btn btn-primary d-block mx-auto mt-4">Acceso Admin</button>
+            <button *ngIf="isAdmin" (click)="navigateToAdmin()" class="btn btn-primary d-block mx-auto mt-4">Acceso
+                Admin</button>
         </div>
     </div>
 
@@ -20,13 +20,16 @@
         <form (submit)="changePassword()" style="margin-top: 20px;">
             <div class="box-oldPassword mb-3">
                 <label for="oldPassword" class="block">Old Password</label>
-                <input type="password" name="oldPassword" class="form-control" pInputText
-                    [(ngModel)]="dataPassword.oldPassword">
+                <input type="password" name="oldPassword" class="form-control" [(ngModel)]="dataPassword.oldPassword">
+            </div>
+            <div class="box-verifyPassword mb-3">
+                <label for="verifyPassword" class="block">Verify Password</label>
+                <input type="password" name="verifyPassword" class="form-control"
+                    [(ngModel)]="dataPassword.verifyPassword">
             </div>
             <div class="box-newPassword">
                 <label for="newPassword" class="block">New Password</label>
-                <input type="password" class="form-control" name="newPassword" pInputText
-                    [(ngModel)]="dataPassword.newPassword">
+                <input type="password" class="form-control" name="newPassword" [(ngModel)]="dataPassword.newPassword">
             </div>
             <input style="border-radius: 10px;" type="submit" class="btn btn-primary d-block mx-auto mt-4"
                 value="Confirm Changes">

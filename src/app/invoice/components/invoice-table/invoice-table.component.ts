@@ -152,47 +152,33 @@ export class InvoiceTableComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Se ha producido un error. Compruebe los datos introducidos',
+          detail: this.errorTextUpdate,
         });
       }
     }, 500);
   }
 
   private createInvoice() {
-    const { nameArticle, price_unit, description, amount, order_date } =
-      this.invoiceInfoActive;
-    if (
-      nameArticle !== '' &&
-      nameArticle !== undefined &&
-      price_unit > 0 &&
-      price_unit !== undefined &&
-      description !== '' &&
-      description !== undefined &&
-      amount > 0 &&
-      amount !== undefined &&
-      order_date !== undefined
-    ) {
-      this.invoiceInfoActive.price_total = price_unit * amount;
-      this.onSubmitCreate.emit(this.invoiceInfoActive);
+    const { price_unit, amount } = this.invoiceInfoActive;
+    this.invoiceInfoActive.price_total = price_unit * amount;
+    this.onSubmitCreate.emit(this.invoiceInfoActive);
 
-      setTimeout(() => {
-        if (!this.showErrorCreate) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Creado con Exito',
-            detail: 'Se ha creado con Exito!',
-          });
-          this.hideDialog();
-        } else {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail:
-              'Se ha producido un error con la creacion de la factura. Compruebe los datos introducidos',
-          });
-        }
-      }, 500);
-    }
+    setTimeout(() => {
+      if (!this.showErrorCreate) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Creado con Exito',
+          detail: 'Se ha creado con Exito!',
+        });
+        this.hideDialog();
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: this.errorTextCreate,
+        });
+      }
+    }, 500);
   }
 
   confirmDelete(id: string) {

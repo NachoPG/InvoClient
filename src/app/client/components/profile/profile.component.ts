@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   dataPassword: PasswordChange = {
     idUser: '',
     oldPassword: '',
+    verifyPassword: '',
     newPassword: '',
     username: '',
   };
@@ -48,10 +49,21 @@ export class ProfileComponent implements OnInit {
   }
 
   changePassword() {
-    const { oldPassword, newPassword } = this.dataPassword;
-    if (oldPassword !== '' && newPassword !== '') {
-      this.onSubmitPassword.emit(this.dataPassword);
+    const { oldPassword, newPassword, verifyPassword } = this.dataPassword;
 
+    if (oldPassword !== '' && newPassword !== '') {
+      if (oldPassword !== verifyPassword) {
+        this.dataPassword = {} as PasswordChange;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail:
+            'Se ha producido un error. La contraseña actual es incorrecta',
+        });
+        return;
+      }
+
+      this.onSubmitPassword.emit(this.dataPassword);
       setTimeout(() => {
         // console.log(this.showErrorPassword);
         if (!this.showErrorPassword) {
@@ -61,6 +73,7 @@ export class ProfileComponent implements OnInit {
             detail: 'Se ha cambiado la password con exito',
           });
         } else {
+          this.dataPassword = {} as PasswordChange;
           this.messageService.add({
             severity: 'error',
             summary: 'Error',

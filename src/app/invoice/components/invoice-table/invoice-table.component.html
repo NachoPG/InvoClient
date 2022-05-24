@@ -5,7 +5,7 @@
             class="mr-1"></button>
     </div>
     <div class="flex">
-        <button [disabled]="invoiceData.length === 0" pTooltip="Export to XLS" (click)="exportExcel()" type="button"
+        <button [disabled]="invoiceData.length === 0" pTooltip="Export to XLSX" (click)="exportExcel()" type="button"
             pButton pRipple icon="pi pi-file-excel" class="p-button-success me-2" tooltipPosition="bottom"></button>
         <button [disabled]="invoiceData.length === 0" (click)="exportPdf()" pTooltip="Export to PDF"
             tooltipPosition="bottom" type="button" pButton pRipple icon="pi pi-file-pdf"

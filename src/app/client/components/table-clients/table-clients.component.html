@@ -38,7 +38,7 @@
                 <th>Province</th>
                 <th>Country</th>
                 <th>CIF</th>
-                <th>Population</th>
+                <th>City</th>
                 <th>Code Postal</th>
                 <th>Actions</th>
             </tr>
@@ -117,7 +117,11 @@
                 <p-inputMask type="text" id="phone" [size]="9" [unmask]="true" placeholder="999-999-999"
                     [(ngModel)]="clientActive.phone" name="phone" #phone="ngModel" mask="999-999-999" [required]="true">
                 </p-inputMask>
-
+                <div *ngIf="(phone.dirty && phone.errors)">
+                    <small class="form-text text-danger" *ngIf="phone.errors['required']">
+                        Este campo es requerido
+                    </small>
+                </div>
             </div>
             <div class="input-email form-group" style="margin: 10px 0px">
                 <label for="email">Email</label>
