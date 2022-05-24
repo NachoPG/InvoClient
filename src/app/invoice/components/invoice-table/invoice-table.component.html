@@ -80,38 +80,38 @@
                     <input type="text" placeholder="Nombre Articulo" class="form-control"
                         [(ngModel)]="invoiceInfoActive.nameArticle" name="nameArticle" #nameArticle="ngModel" id="name"
                         required autofocus />
-                    <small class="p-error" *ngIf="nameArticle.dirty && !invoiceInfoActive.nameArticle">Este campo es
-                        requerido</small>
+                    <small class="p-error" *ngIf="nameArticle.dirty && !invoiceInfoActive.nameArticle">This field is
+                        required.</small>
                 </div>
                 <div class="form-group" style="margin: 10px 0px">
                     <label class="form-label" for="direction">Unit Price</label>
                     <p-inputNumber placeholder="Unit Price" [(ngModel)]="invoiceInfoActive.price_unit" mode="currency"
                         currency="EUR" locale="es-ES" name="unitPrice" #unitPrice="ngModel" [required]="true">
                     </p-inputNumber>
-                    <small class="p-error" *ngIf="unitPrice.dirty && !invoiceInfoActive.price_unit">Este campo es
-                        requerido</small>
+                    <small class="p-error" *ngIf="unitPrice.dirty && !invoiceInfoActive.price_unit">This field is
+                        required.</small>
                 </div>
                 <div class="form-group" style="margin: 10px 0px">
                     <label class="form-label" for="amount">Amount</label>
                     <input type="number" placeholder="Amount" name="amount" #amount="ngModel" class="form-control"
                         [(ngModel)]="invoiceInfoActive.amount" required>
-                    <small class="p-error" *ngIf="amount.dirty && !invoiceInfoActive.amount">Este campo es
-                        requerido</small>
+                    <small class="p-error" *ngIf="amount.dirty && !invoiceInfoActive.amount">This field is
+                        required.</small>
                 </div>
                 <div class="form-group" style="margin: 10px 0px">
                     <label class="form-label" for="description">Description</label>
                     <textarea name="description" class="form-control" id="description"
                         [(ngModel)]="invoiceInfoActive.description" #description="ngModel" required cols="30"
                         rows="10"></textarea>
-                    <small class="p-error" *ngIf="description.dirty && !invoiceInfoActive.description">Este campo es
-                        requerido</small>
+                    <small class="p-error" *ngIf="description.dirty && !invoiceInfoActive.description">This field is
+                        required.</small>
                 </div>
                 <div class="form-group" style="margin: 10px 0px">
                     <label class="form-label" for="order-date">Order Date</label>
                     <input type="date" class="form-control" #orderDate="ngModel"
                         [(ngModel)]="invoiceInfoActive.order_date" name="orderDate" required />
-                    <small class="p-error" *ngIf="orderDate.dirty && !invoiceInfoActive.order_date">Este campo es
-                        requerido</small>
+                    <small class="p-error" *ngIf="orderDate.dirty && !invoiceInfoActive.order_date">This field is
+                        required.</small>
                 </div>
 
                 <div class="buttons-actions d-flex justify-content-end mt-4">

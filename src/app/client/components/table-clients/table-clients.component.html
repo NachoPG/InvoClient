@@ -86,40 +86,40 @@
     <ng-template pTemplate="content">
         <form #clientForm="ngForm" name="clientForm" role="form" novalidate autocomplete="off">
             <div class="input-name form-group" style="margin: 10px 0px">
-                <label for="name">Nombre Empresa</label>
+                <label for="name">Company Name</label>
                 <input type="text" class="form-control" placeholder="Nombre Empresa" name="name"
                     [(ngModel)]="clientActive.nameCompany" id="name" #name="ngModel" minlength="3" maxlength="30"
                     required />
                 <div *ngIf="(name.dirty && name.errors)">
                     <small class="form-text text-danger" *ngIf="name.errors['required']">
-                        Este campo es requerido
+                        This field is required
                     </small>
                     <small class="form-text text-danger" *ngIf="name.errors['minlength']">
-                        Este campo tiene que tener una longitud minima de 3 caracteres
+                        This field must have a minimum length of 3 characters.
                     </small>
                 </div>
             </div>
             <div class="input-direction form-group" style="margin: 10px 0px">
-                <label for="direction">Direccion</label>
+                <label for="direction">Direction</label>
                 <input type="text" class="form-control" placeholder="Direccion" name="direction" #direction="ngModel"
                     [(ngModel)]="clientActive.direction" id="direction" minlength="3" maxlength="50" required />
                 <div *ngIf="(direction.dirty && direction.errors)">
                     <small class="form-text text-danger" *ngIf="direction.errors['required']">
-                        Este campo es requerido
+                        This field is required
                     </small>
                     <small class="form-text text-danger" *ngIf="direction.errors['minlength']">
-                        Este campo tiene que tener una longitud minima de 3 caracteres
+                        This field must have a minimum length of 3 characters.
                     </small>
                 </div>
             </div>
             <div class="input-phone form-group" style="margin: 10px 0px">
-                <label for="phone">Telefono</label>
+                <label for="phone">Phone</label>
                 <p-inputMask type="text" id="phone" [size]="9" [unmask]="true" placeholder="999-999-999"
                     [(ngModel)]="clientActive.phone" name="phone" #phone="ngModel" mask="999-999-999" [required]="true">
                 </p-inputMask>
                 <div *ngIf="(phone.dirty && phone.errors)">
                     <small class="form-text text-danger" *ngIf="phone.errors['required']">
-                        Este campo es requerido
+                        This field is required.
                     </small>
                 </div>
             </div>
@@ -129,27 +129,27 @@
                     [(ngModel)]="clientActive.email" id="email" #email="ngModel" required />
                 <div *ngIf="(email.dirty && email.errors)">
                     <small class="form-text text-danger" *ngIf="email.errors['required']">
-                        Este campo es requerido.
+                        This field is required.
                     </small>
                 </div>
             </div>
             <div class="input-provincia form-group" style="margin: 10px 0px">
-                <label for="province">Provincia</label>
+                <label for="province">Province</label>
                 <input type="text" placeholder="Provincia" class="form-control" name="province"
                     [(ngModel)]="clientActive.province" id="province" #province="ngModel" required />
                 <div *ngIf="(province.dirty && province.errors)">
                     <small class="form-text text-danger" *ngIf="province.errors['required']">
-                        Este campo es requerido.
+                        This field is required.
                     </small>
                 </div>
             </div>
             <div class="input-country form-group" style="margin: 10px 0px">
-                <label for="country">Pais</label>
+                <label for="country">Country</label>
                 <input type="text" class="form-control" [(ngModel)]="clientActive.country" id="direction" name="country"
                     #country="ngModel" placeholder="Pais" required />
                 <div *ngIf="(country.dirty && country.errors)">
                     <small class="form-text text-danger" *ngIf="country.errors['required']">
-                        Este campo es requerido.
+                        This field is required.
                     </small>
                 </div>
             </div>
@@ -159,32 +159,32 @@
                     name="cif" #cif="ngModel" required />
                 <div *ngIf="(cif.dirty && cif.errors)">
                     <small class="form-text text-danger" *ngIf="cif.errors['required']">
-                        Este campo es requerido.
+                        This field is required.
                     </small>
                 </div>
             </div>
             <div class="input-population form-group" style="margin: 10px 0px">
-                <label for="population">Poblacion</label>
+                <label for="population">City</label>
                 <input type="text" placeholder="Poblacion" class="form-control" [(ngModel)]="clientActive.population"
                     id="population" required name="population" #population="ngModel" />
                 <div *ngIf="(population.dirty && population.errors)">
                     <small class="form-text text-danger" *ngIf="population.errors['required']">
-                        Este campo es requerido.
+                        This field is required.
                     </small>
                 </div>
             </div>
             <div class="input-codePostal form-group" style="margin: 10px 0px">
-                <label for="codePostal">Codigo Postal</label>
+                <label for="codePostal">Postal Code</label>
                 <input type="text" placeholder="Codigo Postal" pattern="[0-9]+" maxlength="5" class="form-control"
                     [(ngModel)]="clientActive.codePostal" id="codePostal" name="codePostal" #codePostal="ngModel"
                     required />
                 <div *ngIf="(codePostal.dirty && codePostal.errors)">
                     <small class="form-text text-danger" *ngIf="codePostal.errors['required']">
-                        Este campo es requerido.
+                        This field is required.
                     </small>
                     <small class="form-text text-danger"
                         *ngIf="codePostal.errors['maxlength'] || codePostal.errors['pattern']">
-                        Debe estar compuesto por numeros.
+                        It must be composed of numbers.
                     </small>
                 </div>
             </div>

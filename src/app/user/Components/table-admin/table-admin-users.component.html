@@ -65,13 +65,13 @@
     <ng-template pTemplate="content">
         <section class="content-form-edit">
             <div class="input-name form-group" style="margin: 10px 0px">
-                <label for="name">Nombre</label>
+                <label for="name">Name</label>
                 <input type="text" [(ngModel)]="userCreateActive.name" class="form-control" id="name" required
                     autofocus />
                 <small class="p-error" *ngIf="!userCreateActive.name">Name is required.</small>
             </div>
             <div class="input-apellidos form-group" style="margin: 10px 0px">
-                <label for="Apellidos">Apellidos</label>
+                <label for="Apellidos">Surname</label>
                 <input type="text" [(ngModel)]="userCreateActive.surname" class="form-control" required />
                 <small class="p-error" *ngIf="!userCreateActive.surname">Surname is required.</small>
             </div>
