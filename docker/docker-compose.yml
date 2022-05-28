@@ -1,0 +1,58 @@
+version: '3.4'
+services:
+  www:
+    image: invoclient-php:latest
+    container_name: php_invoclient
+    restart: always
+    command: php -S 0.0.0.0:80 /var/www/html/public/index.php
+    ports:
+      - 80:80
+    volumes:
+      - /home/bootcamp/Escritorio/InvoClient-Back:/var/www/html
+    networks:
+      - network
+    links:
+      - mysql
+    depends_on:
+      - mysql
+      - phpmyadmin
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_invoclient
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+     - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=invoclient
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - network-bd
+      - network
+  phpmyadmin:
+    image: phpmyadmin:5.1-apache
+    container_name: phpmyadmin_invoclient
+    restart: always
+    links: 
+      - mysql:mysql
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+    networks:
+      - network-bd
+    depends_on:
+      - mysql
+      
+      
+volumes:
+  mysql_data:
+
+  
+networks:
+  network:
+  network-bd:
