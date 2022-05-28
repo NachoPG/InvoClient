@@ -1,27 +1,21 @@
-# InvoClientFront
+# Proyecto Final de Ciclo - App InvoClient
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
+¿Qué es InvoClient?
+Es una software capaz de centralizar toda la información entre la empresa y el cliente. Este proyecto es una agrupación de tecnologías que permiten llevar a cabo las principales funciones de gestión de clientes de una empresa, de manera estructurada y eficiente.
 
-## Development server
+La aplicacion esta alojada en un hosting llamado Netlify. Se puede acceder con esta url: (https://invoclient-angular.netlify.app/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Instalación de la Aplicación 🚀
 
-## Code scaffolding
+## Construido con 🛠️
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+-   [Angular](https://angular.io/docs)
+-   [PHP](https://www.php.net/docs.php)
 
-## Build
+## Autores ✒️
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+-   **Nacho Pedros Gil**
 
-## Running unit tests
+## Licencia 📄
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Este proyecto está bajo la Licencia (CC-Creative-Comons).
