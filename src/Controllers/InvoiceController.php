@@ -15,7 +15,7 @@ class InvoiceController extends BaseController
         $this->verifyToken();
         try {
             $resultData = $invoiceModel->getInvoicesFromClient($id);
-            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            $this->sendOutput(json_encode(mb_convert_encoding($resultData, "UTF-8", "UTF-8")), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         } catch (Exception $e) {
             $strErrorDesc = 'Error:' + $e->getMessage();
             $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';

@@ -17,7 +17,7 @@ class ClientController extends BaseController
         $this->verifyToken();
         try {
             $resultData = $clientModel->getClientById($id);
-            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            $this->sendOutput(json_encode(mb_convert_encoding($resultData, "UTF-8", "UTF-8")), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         } catch (Exception $e) {
             $strErrorDesc = 'Error:' + $e->getMessage();
             $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -33,9 +33,9 @@ class ClientController extends BaseController
 
         $clientModel = new Client(new DataBase);
         $this->verifyToken();
+        $resultData = $clientModel->getAllClients();
         try {
-            $resultData = $clientModel->getAllClients();
-            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            $this->sendOutput(json_encode(mb_convert_encoding($resultData, "UTF-8", "UTF-8")), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         } catch (Exception $e) {
             $strErrorDesc = 'Error:' + $e->getMessage();
             $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -50,7 +50,7 @@ class ClientController extends BaseController
         $this->verifyToken();
         try {
             $resultData = $clientModel->getClientByNameCompany($encondeParamUrl);
-            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            $this->sendOutput(json_encode(mb_convert_encoding($resultData, "UTF-8", "UTF-8")), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         } catch (Exception $e) {
             $strErrorDesc = 'Error:' + $e->getMessage();
             $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';

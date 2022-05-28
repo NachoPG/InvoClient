@@ -1,6 +1,6 @@
 {
-    "server": "localhost",
-    "user": "root",
-    "password": "",
-    "dbname": "invoclient"
+    "server": "eu-cdbr-west-02.cleardb.net",
+    "user": "b2c17a56d0e2c6",
+    "password": "9d6ce1a9",
+    "dbname": "heroku_f9388ee5cc8565f"
 }

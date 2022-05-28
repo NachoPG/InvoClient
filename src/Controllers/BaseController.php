@@ -19,14 +19,17 @@ class BaseController
             }
         }
 
+        // $error = json_last_error_msg();
+        // var_dump($error);
+
         echo $data;
         exit;
     }
 
     protected function generateToken($dataUser)
     {
-        $issuer_claim = "LOCALHOST API";
-        $audience_claim = "THE_AUDIENCE";
+        $issuer_claim = "InvoClient API";
+        $audience_claim = "Web";
         $issuedat_claim = time();
         $expire_claim = $issuedat_claim + (3600 * 24); // 1 day
         $token = array(

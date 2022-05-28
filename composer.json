@@ -2,11 +2,12 @@
     "name": "invoclient/invoclient-back",
     "autoload": {
         "psr-4": {
-            "App\\" : "src/",
-            "Config\\" : "config/"
+            "App\\": "src/",
+            "Config\\": "config/"
         }
     },
     "require": {
-        "firebase/php-jwt": "^6.1"
+        "firebase/php-jwt": "^6.1",
+        "ext-mbstring": "*"
     }
 }

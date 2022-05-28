@@ -31,7 +31,7 @@ class Dispatcher
             $action = $this->routeList[$routeApi]["action"];
             $controller->$action(...$this->currentRequest->getParams());
         } else {
-            $baseControler->sendOutput('', array('HTTP/1.1 404 Not Found'));
+            $baseControler->sendOutput(json_encode(array("message" => "Ruta no encontrada")), array('HTTP/1.1 404 Not Found'));
         }
     }
 }

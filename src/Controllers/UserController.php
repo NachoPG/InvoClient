@@ -77,7 +77,7 @@ class UserController extends BaseController
         $result = $response["admin"] === "1" ? true : false;
         if ($result) {
             $resultData = $userModel->getAllUsers();
-            $this->sendOutput(json_encode($resultData), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+            $this->sendOutput(json_encode(mb_convert_encoding($resultData, "UTF-8", "UTF-8")), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         } else {
             $strErrorDesc = 'Forbidden.';
             $strErrorHeader = 'HTTP/1.1 403 Internal Server Error';
