@@ -87,7 +87,7 @@
         <form #clientForm="ngForm" name="clientForm" role="form" novalidate autocomplete="off">
             <div class="input-name form-group" style="margin: 10px 0px">
                 <label for="name">Company Name</label>
-                <input type="text" class="form-control" placeholder="Nombre Empresa" name="name"
+                <input type="text" class="form-control" placeholder="Company Name" name="name"
                     [(ngModel)]="clientActive.nameCompany" id="name" #name="ngModel" minlength="3" maxlength="30"
                     required />
                 <div *ngIf="(name.dirty && name.errors)">
@@ -101,7 +101,7 @@
             </div>
             <div class="input-direction form-group" style="margin: 10px 0px">
                 <label for="direction">Direction</label>
-                <input type="text" class="form-control" placeholder="Direccion" name="direction" #direction="ngModel"
+                <input type="text" class="form-control" placeholder="Direction" name="direction" #direction="ngModel"
                     [(ngModel)]="clientActive.direction" id="direction" minlength="3" maxlength="50" required />
                 <div *ngIf="(direction.dirty && direction.errors)">
                     <small class="form-text text-danger" *ngIf="direction.errors['required']">
@@ -135,7 +135,7 @@
             </div>
             <div class="input-provincia form-group" style="margin: 10px 0px">
                 <label for="province">Province</label>
-                <input type="text" placeholder="Provincia" class="form-control" name="province"
+                <input type="text" placeholder="Province" class="form-control" name="province"
                     [(ngModel)]="clientActive.province" id="province" #province="ngModel" required />
                 <div *ngIf="(province.dirty && province.errors)">
                     <small class="form-text text-danger" *ngIf="province.errors['required']">
@@ -146,7 +146,7 @@
             <div class="input-country form-group" style="margin: 10px 0px">
                 <label for="country">Country</label>
                 <input type="text" class="form-control" [(ngModel)]="clientActive.country" id="direction" name="country"
-                    #country="ngModel" placeholder="Pais" required />
+                    #country="ngModel" placeholder="Country" required />
                 <div *ngIf="(country.dirty && country.errors)">
                     <small class="form-text text-danger" *ngIf="country.errors['required']">
                         This field is required.
@@ -165,7 +165,7 @@
             </div>
             <div class="input-population form-group" style="margin: 10px 0px">
                 <label for="population">City</label>
-                <input type="text" placeholder="Poblacion" class="form-control" [(ngModel)]="clientActive.population"
+                <input type="text" placeholder="City" class="form-control" [(ngModel)]="clientActive.population"
                     id="population" required name="population" #population="ngModel" />
                 <div *ngIf="(population.dirty && population.errors)">
                     <small class="form-text text-danger" *ngIf="population.errors['required']">
@@ -175,7 +175,7 @@
             </div>
             <div class="input-codePostal form-group" style="margin: 10px 0px">
                 <label for="codePostal">Postal Code</label>
-                <input type="text" placeholder="Codigo Postal" pattern="[0-9]+" maxlength="5" class="form-control"
+                <input type="text" placeholder="Postal Code" pattern="[0-9]+" maxlength="5" class="form-control"
                     [(ngModel)]="clientActive.codePostal" id="codePostal" name="codePostal" #codePostal="ngModel"
                     required />
                 <div *ngIf="(codePostal.dirty && codePostal.errors)">

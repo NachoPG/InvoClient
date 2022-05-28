@@ -77,7 +77,7 @@
             <form #invoiceForm="ngForm">
                 <div class="form-group" style="margin: 10px 0px">
                     <label class="form-label" for="nameArticle">Article Name</label>
-                    <input type="text" placeholder="Nombre Articulo" class="form-control"
+                    <input type="text" placeholder="Article Name" class="form-control"
                         [(ngModel)]="invoiceInfoActive.nameArticle" name="nameArticle" #nameArticle="ngModel" id="name"
                         required autofocus />
                     <small class="p-error" *ngIf="nameArticle.dirty && !invoiceInfoActive.nameArticle">This field is
