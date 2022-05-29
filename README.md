@@ -7,7 +7,7 @@ Es una software capaz de centralizar toda la información entre la empresa y el 
 
 ### Docker
 
-Como requisito principal, tener instalado la versión de Docker correspondiente al sistema operativo. Tambien, clonar el código fuente de la rama invoclient_back del repositorio.
+Como requisito principal, tener instalado la versión de Docker correspondiente al sistema operativo. También, clonar el código fuente de la rama invoclient_back del repositorio.
 
 1. Ejecutar en la terminal este comando: docker pull mysql:8
 2. Ejecutar en la terminal este comando: docker pull phpmyadmin:5.1-apache
